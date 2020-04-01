@@ -1,0 +1,156 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachineName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "networkSecurityGroupName": "drms-nsg",
+    "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
+    "vnetId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet151",
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/default')]",
+    "location": "northeurope",
+    "networkSecurityGroupRules": [
+      {
+        "name": "RDP",
+        "properties": {
+          "priority": 300,
+          "protocol": "TCP",
+          "access": "Allow",
+          "direction": "Inbound",
+          "sourceAddressPrefix": "*",
+          "sourcePortRange": "*",
+          "destinationAddressPrefix": "*",
+          "destinationPortRange": "3389"
+        }
+      }
+    ],
+    "publicIpAddressName": "[concat('ip-', parameters('virtualMachineName'))]",
+    "networkInterfaceName": "[concat('network', parameters('virtualMachineName'))]",
+    "subnetName": "default",
+    "virtualNetworkId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet151",
+    "publicIpAddressType": "Dynamic",
+    "publicIpAddressSku": "Basic",
+    "virtualMachineRG": "Innovation",
+    "osDiskType": "Premium_LRS",
+    "virtualMachineSize": "Standard_DS2",
+    "adminUsername": "sa",
+    "adminPassword": "Yes123%NoNoNo"
+  },
+  "resources": [
+    {
+      "name": "[variables('networkInterfaceName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2019-07-01",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
+        "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              },
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIpAddress": {
+                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "[variables('nsgId')]"
+        }
+      },
+      "tags": {
+        "dmrs-release": "true"
+      }
+    },
+    {
+      "name": "[variables('networkSecurityGroupName')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-02-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "securityRules": "[variables('networkSecurityGroupRules')]"
+      },
+      "tags": {
+        "dmrs-release": "true"
+      }
+    },
+    {
+      "name": "[variables('publicIpAddressName')]",
+      "type": "Microsoft.Network/publicIpAddresses",
+      "apiVersion": "2019-02-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "publicIpAllocationMethod": "[variables('publicIpAddressType')]"
+      },
+      "sku": {
+        "name": "[variables('publicIpAddressSku')]"
+      },
+      "tags": {
+        "dmrs-release": "true"
+      }
+    },
+    {
+      "name": "[parameters('virtualMachineName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2019-07-01",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('virtualMachineSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "createOption": "fromImage",
+            "managedDisk": {
+              "storageAccountType": "[variables('osDiskType')]"
+            }
+          },
+          "imageReference": {
+            "publisher": "MicrosoftWindowsDesktop",
+            "offer": "Windows-10",
+            "sku": "rs5-pro-g2",
+            "version": "latest"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "[parameters('virtualMachineName')]",
+          "adminUsername": "[variables('adminUsername')]",
+          "adminPassword": "[variables('adminPassword')]",
+          "windowsConfiguration": {
+            "enableAutomaticUpdates": true,
+            "provisionVmAgent": true
+          }
+        }
+      },
+      "tags": {
+        "dmrs-release": "true"
+      }
+    }
+  ],
+  "outputs": {
+    "adminUsername": {
+      "type": "string",
+      "value": "[variables('adminUsername')]"
+    }
+  }
+}
