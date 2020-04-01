@@ -9,7 +9,7 @@
   "variables": {
     "networkSecurityGroupName": "[concat('drms-ng-',parameters('virtualMachineName'))]",
     "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
-    "vnetId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet151",
+    "vnetId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet366",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/default')]",
     "location": "northeurope",
     "networkSecurityGroupRules": [
@@ -30,7 +30,7 @@
     "publicIpAddressName": "[concat('ip-', parameters('virtualMachineName'))]",
     "networkInterfaceName": "[concat('network-', parameters('virtualMachineName'))]",
     "subnetName": "default",
-    "virtualNetworkId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet151",
+    "virtualNetworkId": "variables('vnetId')",
     "publicIpAddressType": "Dynamic",
     "publicIpAddressSku": "Basic",
     "virtualMachineRG": "Innovation",
