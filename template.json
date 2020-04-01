@@ -7,7 +7,7 @@
     }
   },
   "variables": {
-    "networkSecurityGroupName": "drms-nsg",
+    "networkSecurityGroupName": "[concat('drms-ng-',parameters('virtualMachineName'))]",
     "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
     "vnetId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet151",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/default')]",
@@ -28,7 +28,7 @@
       }
     ],
     "publicIpAddressName": "[concat('ip-', parameters('virtualMachineName'))]",
-    "networkInterfaceName": "[concat('network', parameters('virtualMachineName'))]",
+    "networkInterfaceName": "[concat('network-', parameters('virtualMachineName'))]",
     "subnetName": "default",
     "virtualNetworkId": "/subscriptions/492aca8f-e229-483b-a77b-6e8a988229a7/resourceGroups/Innovation/providers/Microsoft.Network/virtualNetworks/Innovationvnet151",
     "publicIpAddressType": "Dynamic",
