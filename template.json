@@ -35,7 +35,7 @@
     "publicIpAddressSku": "Basic",
     "virtualMachineRG": "Innovation",
     "osDiskType": "Premium_LRS",
-    "virtualMachineSize": "Standard_DS2",
+    "virtualMachineSize": "Standard_DS2_v2",
     "adminUsername": "sa",
     "adminPassword": "Yes123%NoNoNo"
   },
