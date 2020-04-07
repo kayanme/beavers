@@ -37,7 +37,13 @@
     "osDiskType": "Premium_LRS",
     "virtualMachineSize": "Standard_DS2_v2",
     "adminUsername": "sa",
-    "adminPassword": "Yes123%NoNoNo"
+    "adminPassword": "Yes123%NoNoNo",
+    "VSTSAccountName": "https://tfs.indusoft.ru/tfs/Indusoft",
+    "TeamProject": "I-DRMS",
+    "DeploymentGroup": "TestAzureMachines",
+    "AgentName": "parameters('virtualMachineName')",
+    "Tags": "drms",
+    "PATToken": "pkqkom5u5viz5o67s62qhfxwpjvfgi7nh2m3hru4fqwlehswbvta"
   },
   "resources": [
     {
@@ -144,6 +150,32 @@
       },
       "tags": {
         "dmrs-release": "true"
+      }
+    },
+    {
+      "name": "[concat(parameters('virtualMachineName'),copyIndex(),'/TeamServicesAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[variables('location')]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/',
+                      concat(virtualMachineName('vmNamePrefix'),copyindex()))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.VisualStudio.Services",
+        "type": "TeamServicesAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "VSTSAccountName": "[variables('VSTSAccountName')]",
+          "TeamProject": "[variables('TeamProject')]",
+          "DeploymentGroup": "[variables('DeploymentGroup')]",
+          "AgentName": "[variables('AgentName')]",
+          "Tags": "[variables('Tags')]"
+        },
+        "protectedSettings": {
+          "PATToken": "[variables('PATToken')]"
+        }
       }
     }
   ],
