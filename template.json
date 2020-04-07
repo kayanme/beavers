@@ -151,7 +151,8 @@
       "tags": {
         "dmrs-release": "true"
       }
-    },
+    }
+  ],
   "outputs": {
     "adminUsername": {
       "type": "string",
