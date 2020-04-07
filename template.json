@@ -170,7 +170,8 @@
           "TeamProject": "[variables('TeamProject')]",
           "DeploymentGroup": "[variables('DeploymentGroup')]",
           "AgentName": "[variables('AgentName')]",
-          "Tags": "[variables('Tags')]"
+          "Tags": "[variables('Tags')]",
+          "DeploymentType": "[variables('Tags')]"
         },
         "protectedSettings": {
           "PATToken": "[variables('PATToken')]"
