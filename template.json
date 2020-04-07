@@ -153,12 +153,12 @@
       }
     },
     {
-      "name": "[concat(parameters('virtualMachineName'),copyIndex(),'/TeamServicesAgent')]",
+      "name": "[concat(parameters('virtualMachineName'),'/TeamServicesAgent')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "location": "[variables('location')]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', concat(variable('virtualMachineName'),copyindex()))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', concat(variable('virtualMachineName')))]"
       ],
       "properties": {
         "publisher": "Microsoft.VisualStudio.Services",
