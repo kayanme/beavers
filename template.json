@@ -158,8 +158,7 @@
       "location": "[variables('location')]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/',
-                      concat(virtualMachineName('vmNamePrefix'),copyindex()))]"
+        "[resourceId('Microsoft.Compute/virtualMachines/', concat(variable('virtualMachineName'),copyindex()))]"
       ],
       "properties": {
         "publisher": "Microsoft.VisualStudio.Services",
