@@ -27,8 +27,8 @@
         }
       }
     ],
-    "publicIpAddressName": "[concat('ip-', parameters('virtualMachineName'))]",
-    "networkInterfaceName": "[concat('network-', parameters('virtualMachineName'))]",
+    "publicIpAddressName": "[concat(parameters('virtualMachineName'),'-ip')]",
+    "networkInterfaceName": "[concat(parameters('virtualMachineName'),'-network')]",
     "subnetName": "default",
     "virtualNetworkId": "variables('vnetId')",
     "publicIpAddressType": "Dynamic",
