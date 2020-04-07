@@ -151,34 +151,7 @@
       "tags": {
         "dmrs-release": "true"
       }
-    },
-    {
-      "name": "[concat(parameters('virtualMachineName'),'/TeamServicesAgent')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[variables('location')]",
-      "apiVersion": "2015-06-15",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', concat(parameters('virtualMachineName')))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.VisualStudio.Services",
-        "type": "TeamServicesAgent",
-        "typeHandlerVersion": "1.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "VSTSAccountName": "[variables('VSTSAccountName')]",
-          "TeamProject": "[variables('TeamProject')]",
-          "DeploymentGroup": "[variables('DeploymentGroup')]",
-          "AgentName": "[variables('AgentName')]",
-          "Tags": "[variables('Tags')]",
-          "DeploymentType": "[variables('Tags')]"
-        },
-        "protectedSettings": {
-          "PATToken": "[variables('PATToken')]"
-        }
-      }
     }
-  ],
   "outputs": {
     "adminUsername": {
       "type": "string",
