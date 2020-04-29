@@ -36,7 +36,7 @@
           "sourceAddressPrefix": "*",
           "sourcePortRange": "*",
           "destinationAddressPrefix": "*",
-          "destinationPortRange": "23:200"
+          "destinationPortRange": "23,180-200"
         }
       }
     ],
