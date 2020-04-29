@@ -29,7 +29,7 @@
       {
         "name": "FTP",
         "properties": {
-          "priority": 300,
+          "priority": 250,
           "protocol": "TCP",
           "access": "Allow",
           "direction": "Inbound",
