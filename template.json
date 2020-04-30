@@ -36,7 +36,20 @@
           "sourceAddressPrefix": "*",
           "sourcePortRange": "*",
           "destinationAddressPrefix": "*",
-          "destinationPortRange": "23,180-200"
+          "destinationPortRange": "23"
+        }
+      },
+      {
+        "name": "PassiveFTP",
+        "properties": {
+          "priority": 260,
+          "protocol": "TCP",
+          "access": "Allow",
+          "direction": "Inbound",
+          "sourceAddressPrefix": "*",
+          "sourcePortRange": "*",
+          "destinationAddressPrefix": "*",
+          "destinationPortRange": "180-200"
         }
       }
     ],
